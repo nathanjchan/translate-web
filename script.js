@@ -11,20 +11,20 @@ function updateSpokenPhrasesDisplay() {
   list.innerHTML = ''; // Clear current list
 
   // Iterate over the spoken phrases in reverse order
-  spokenPhrases.slice().reverse().forEach(function(phrase, index) {
-      var listItem = document.createElement('li');
-      listItem.textContent = phrase;
-      list.appendChild(listItem);
+  spokenPhrases.slice().reverse().forEach(function (phrase, index) {
+    var listItem = document.createElement('li');
+    listItem.textContent = phrase;
+    list.appendChild(listItem);
   });
 }
 
 function testSpeech() {
   console.log('testSpeech() activated');
   testBtn.disabled = true;
-  testBtn.textContent = 'Test in progress';
+  testBtn.textContent = 'Recording in progress';
 
   var recognition = new SpeechRecognition();
-  recognition.lang = 'ja-JP';
+  recognition.lang = 'en-US';
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
 
@@ -50,12 +50,12 @@ function testSpeech() {
   recognition.onspeechend = function () {
     recognition.stop();
     testBtn.disabled = false;
-    testBtn.textContent = 'Start new test';
+    testBtn.textContent = 'Start recording';
   }
 
   recognition.onerror = function (event) {
     testBtn.disabled = false;
-    testBtn.textContent = 'Start new test';
+    testBtn.textContent = 'Start recording';
   }
 
   recognition.onaudiostart = function (event) {
