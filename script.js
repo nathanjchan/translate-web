@@ -21,7 +21,7 @@ function updateSpokenPhrasesDisplay() {
 function testSpeech() {
   console.log('testSpeech() activated');
   testBtn.disabled = true;
-  testBtn.textContent = 'Recording in progress';
+  testBtn.textContent = 'Recording In Progress';
 
   var recognition = new SpeechRecognition();
   recognition.lang = 'en-US';
@@ -48,14 +48,16 @@ function testSpeech() {
   }
 
   recognition.onspeechend = function () {
+    console.log('SpeechRecognition.onspeechend');
     recognition.stop();
     testBtn.disabled = false;
     testBtn.textContent = 'Start recording';
+    testSpeech();
   }
 
   recognition.onerror = function (event) {
     testBtn.disabled = false;
-    testBtn.textContent = 'Start recording';
+    testBtn.textContent = 'Start Recording';
   }
 
   recognition.onaudiostart = function (event) {
