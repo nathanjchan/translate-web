@@ -20,7 +20,7 @@ function updateSpokenPhrasesDisplay() {
 function testSpeech() {
   console.log('testSpeech() activated');
   testBtn.disabled = true;
-  testBtn.textContent = 'Recording In Progress';
+  testBtn.textContent = 'Translation In Progress';
 
   var recognition = new SpeechRecognition();
   recognition.lang = 'en-US';
@@ -42,7 +42,7 @@ function testSpeech() {
     // We then return the transcript property of the SpeechRecognitionAlternative object 
 
     for (let i = event.resultIndex; i < event.results.length; ++i) {
-      var speechResult = event.results[i][0].transcript.toLowerCase();
+      var speechResult = event.results[i][0].transcript;
       console.log('Confidence: ' + event.results[i][0].confidence);
 
       spokenPhrases.push(speechResult);
@@ -56,7 +56,7 @@ function testSpeech() {
 
   recognition.onerror = function (event) {
     testBtn.disabled = false;
-    testBtn.textContent = 'Start Recording';
+    testBtn.textContent = 'Start Real-Time Translation';
   }
 
   recognition.onaudiostart = function (event) {
