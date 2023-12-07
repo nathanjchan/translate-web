@@ -31,6 +31,7 @@ function testSpeech() {
   recognition.start();
 
   recognition.onresult = function (event) {
+    console.log('SpeechRecognition.onresult');
     // The SpeechRecognitionEvent results property returns a SpeechRecognitionResultList object
     // The SpeechRecognitionResultList object contains SpeechRecognitionResult objects.
     // It has a getter so it can be accessed like an array
@@ -71,6 +72,7 @@ function testSpeech() {
   recognition.onend = function (event) {
     //Fired when the speech recognition service has disconnected.
     console.log('SpeechRecognition.onend');
+    testSpeech();
   }
 
   recognition.onnomatch = function (event) {
