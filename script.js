@@ -4,13 +4,12 @@ var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEv
 
 var testBtn = document.querySelector('button');
 
-var spokenPhrases = []; // Array to store all spoken phrases
+var spokenPhrases = [];
 
 function updateSpokenPhrasesDisplay() {
   var list = document.querySelector('.spoken-phrases');
-  list.innerHTML = ''; // Clear current list
+  list.innerHTML = '';
 
-  // Iterate over the spoken phrases in reverse order
   spokenPhrases.slice().reverse().forEach(function (phrase, index) {
     var listItem = document.createElement('li');
     listItem.textContent = phrase;
@@ -27,6 +26,7 @@ function testSpeech() {
   recognition.lang = 'en-US';
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
+  recognition.continuous = true;
 
   recognition.start();
 
@@ -39,20 +39,18 @@ function testSpeech() {
     // These also have getters so they can be accessed like arrays.
     // The second [0] returns the SpeechRecognitionAlternative at position 0.
     // We then return the transcript property of the SpeechRecognitionAlternative object 
-    var speechResult = event.results[0][0].transcript.toLowerCase();
 
-    console.log('Confidence: ' + event.results[0][0].confidence);
+    for (let i = event.resultIndex; i < event.results.length; ++i) {
+      var speechResult = event.results[i][0].transcript.toLowerCase();
+      console.log('Confidence: ' + event.results[i][0].confidence);
 
-    spokenPhrases.push(speechResult); // Add the recognized speech to the array
-    updateSpokenPhrasesDisplay(); // Update the display
+      spokenPhrases.push(speechResult);
+    }
+    updateSpokenPhrasesDisplay();
   }
 
   recognition.onspeechend = function () {
     console.log('SpeechRecognition.onspeechend');
-    recognition.stop();
-    testBtn.disabled = false;
-    testBtn.textContent = 'Start recording';
-    testSpeech();
   }
 
   recognition.onerror = function (event) {
