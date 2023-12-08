@@ -6,19 +6,31 @@ var testBtn = document.querySelector('button');
 
 var spokenPhrases = [];
 
+import Translator from "@andreasremdt/simple-translator";
+var translator = new Translator();
+
+function translateText(text) {
+  console.log('Entered translateText()');
+  var translation = {
+    text: text
+  };
+  translator.add('ja', translation);
+  return translator.translateForKey('text', 'ja');
+}
+
 function updateSpokenPhrasesDisplay() {
   var list = document.querySelector('.spoken-phrases');
   list.innerHTML = '';
 
   spokenPhrases.slice().reverse().forEach(function (phrase, index) {
     var listItem = document.createElement('li');
-    listItem.textContent = phrase;
+    listItem.textContent = phrase + ' - ' + translateText(phrase);
     list.appendChild(listItem);
   });
 }
 
 function testSpeech() {
-  console.log('testSpeech() activated');
+  console.log('Entered testSpeech()');
   testBtn.disabled = true;
   testBtn.textContent = 'Translation In Progress';
 
