@@ -6,7 +6,7 @@ var testBtn = document.querySelector('button');
 
 var spokenPhrases = [];
 
-var Translator = require("@andreasremdt/simple-translator");
+import Translator from "@andreasremdt/simple-translator";
 var translator = new Translator();
 
 function translateText(text) {
