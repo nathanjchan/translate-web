@@ -16,7 +16,7 @@ function updateSpokenPhrasesDisplay() {
 
   spokenPhrases.slice().reverse().forEach(function (phrase, index) {
     var listItem = document.createElement('li');
-    listItem.textContent = phrase + ' -> ' + translate(phrase);
+    listItem.textContent = phrase;
     list.appendChild(listItem);
   });
 }
@@ -34,7 +34,7 @@ function testSpeech() {
 
   recognition.start();
 
-  recognition.onresult = function (event) {
+  recognition.onresult = async function (event) {
     console.log('SpeechRecognition.onresult');
     // The SpeechRecognitionEvent results property returns a SpeechRecognitionResultList object
     // The SpeechRecognitionResultList object contains SpeechRecognitionResult objects.
@@ -49,7 +49,9 @@ function testSpeech() {
       var speechResult = event.results[i][0].transcript;
       console.log('Confidence: ' + event.results[i][0].confidence);
 
-      spokenPhrases.push(speechResult);
+      const translated = await translate(speechResult);
+      const final = speechResult + ' -> ' + translated;
+      spokenPhrases.push(final);
     }
     updateSpokenPhrasesDisplay();
   }
