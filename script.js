@@ -1,9 +1,13 @@
+// web speech api
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
 
-var testBtn = document.querySelector('button');
+// translate api
+import { translate } from './translate.js';
 
+// other
+var testBtn = document.querySelector('button');
 var spokenPhrases = [];
 
 function updateSpokenPhrasesDisplay() {
@@ -12,7 +16,7 @@ function updateSpokenPhrasesDisplay() {
 
   spokenPhrases.slice().reverse().forEach(function (phrase, index) {
     var listItem = document.createElement('li');
-    listItem.textContent = phrase;
+    listItem.textContent = phrase + ' -> ' + translate(phrase);
     list.appendChild(listItem);
   });
 }
