@@ -27,7 +27,7 @@ function testSpeech() {
   testBtn.textContent = 'Translation In Progress';
 
   var recognition = new SpeechRecognition();
-  recognition.lang = 'en-US';
+  recognition.lang = 'ja-JP';
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
   recognition.continuous = true;
@@ -46,10 +46,17 @@ function testSpeech() {
     // We then return the transcript property of the SpeechRecognitionAlternative object 
 
     for (let i = event.resultIndex; i < event.results.length; ++i) {
-      var speechResult = event.results[i][0].transcript;
-      console.log('Confidence: ' + event.results[i][0].confidence);
+      const speechResult = event.results[i][0].transcript;
+      const confidence = event.results[i][0].confidence;
+      console.log('Confidence: ' + confidence);
+      if (confidence < 0.5 || !speechResult) {
+        continue;
+      }
 
       const translated = await translate(speechResult);
+      if (!translated) {
+        continue;
+      }
       const final = speechResult + ' -> ' + translated;
       spokenPhrases.push(final);
     }
@@ -106,4 +113,4 @@ function testSpeech() {
   }
 }
 
-testBtn.addEventListener('click', testSpeech);
+testSpeech();
